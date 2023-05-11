@@ -53,3 +53,20 @@ int main(){
     
     return 0;
 }
+/*
+
+Enter no of process >> 4
+Enter the brust time Below .
+
+P1 > 15
+P2 > 35
+P3 > 60
+P4 > 75
+Process	BurstTime	WaitingTime
+P1			15			0
+P2			35			15
+P3			60			50
+P4			75			110
+Average waiting time is 175 
+Average waiting time is 43 
+*/

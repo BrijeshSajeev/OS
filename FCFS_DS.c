@@ -4,7 +4,7 @@
 
 int main() {
     int n, i, head, prev, curr, total_distance = 0;
-    bool direction; // true for right, false for left
+
 
     printf("Enter the number of requests: ");
     scanf("%d", &n);
@@ -32,3 +32,28 @@ int main() {
 
     return 0;
 }
+/*
+Enter the number of requests: 8
+Enter the requests: 98
+183
+37
+122
+14
+124
+65
+67
+Enter the initial head position: 53
+    Head movements
+        1:0
+        2:45
+        3:130
+        4:276
+        5:361
+        6:469
+        7:579
+        8:638
+
+FCFS Disk Scheduling:
+Total Head Movement: 640
+
+*/
