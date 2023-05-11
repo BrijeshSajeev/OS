@@ -1,120 +1,112 @@
-#include<stdio.h> 
+// Online C compiler to run C program online
+#include <stdio.h>
 #include<string.h>
-char state[10];
-void pickup(int); 
-void test(int);
-void putdown(int);
+
+int n,max_eaters,no_eat;
+char status[20],p_name[20][20],han[10];
+
+// Functions
 void print_status();
-char pname[10][10]; 
-char hun[10];
+void putdown(int j);
+void pickup(int i);
+void test(int i);
 
-int no_phil,max_eater;
-
-void main()
-{
-    int i,j,k,n,pos,no_eat,round=1;
-    char c;
-
-    printf("\nEnter number of philosophers: ");
-    scanf("%d",&no_phil); 
-    max_eater=no_phil/2;
-    printf("\n%d philosophers can eat at a time to avoid deadlock.",max_eater); 
-    printf("\nEnter %d philosopher's names one by one: ",no_phil); 
-    for(i=0;i<no_phil;i++)
-    {
-        scanf("%s",pname[i]);
+int main() {
+    int c,round,k,pos;
+    printf("\nEnter no of philoshopers >>  ");scanf("%d",&n);
+    max_eaters=n/2;
+    printf("\nOnly %d philoshopres can eat now \n",max_eaters);
+    printf("\nEnter the phil name >> ");
+    for(int i=0;i<n;i++){
+        scanf("%s",p_name[i]);
+    }
+    printf("\nPOSITION\tNAME");
+    for(int i=0;i<n;i++){
+        printf("\n%d\t\t\t%s",i,p_name[i]);
+        status[i]='t';
     }
     
-    for(i=0;i<no_phil;i++) state[i]='t';
     
-    for(i=0;i<no_phil;i++)
-    {
-        printf("\nposition %d:%s",i,pname[i]);
-    }
-    
-    while(1)
-    {
-     printf("\nROUND%d",round); printf("\n-------"); printf("\nstatus: "); 
-     print_status();
-    no_eat=0;
-     for(j=0;j<no_phil;j++)
-    {
-    if(state[j]=='h')
-    {
-        pickup(j); 
-        if(state[j]=='e')
-            no_eat++;
+    // part 2
+    while(1){
+        printf("\nROUND %d\t",round);
+        print_status();
+        no_eat=0;
+        
+        for(int j=0;j<n;j++){
+            if(status[j]=='h'){
+                pickup(j);
+                if(status[j]=='e'){
+                    no_eat++;
+                }
+            }    
         }
-    }
-
-        printf("\nEnter %d philosophers who wants to eat: ",(max_eater-no_eat)); 
-        for(i=0;i<(max_eater-no_eat);i++)
-        {
-            lab:    
-                printf("\n\nEnter hungry philosopher%d: ",(i+1)); 
-                scanf("%s",hun);
-                for(j=0;j<no_phil;j++)
-                {
-                    k=strcmp(pname[j],hun); 
+        
+        // part 3
+        
+        printf("\nEnter %d no of phil to eat .",(max_eaters-no_eat));
+        for(int i=0;i<(max_eaters-no_eat);i++){
+            lab:
+                printf("\nEnter hungery phil %d ",i+1);
+                scanf("%s",han);
+                for(int j=0;j<n;j++){
+                    k=strcmp(p_name[j],han);
                     if(k==0)
                     {
                         pos=j;
                         break;
                     }
-                    
                 }
                 pickup(pos);
-                if(state[pos]=='h') 
+                if(status[pos]=='h')
                     goto lab;
-        } 
-    
-        printf("\nCurrent status: "); 
-        print_status(); 
-        for(j=0;j<no_phil;j++)
-        {
-            if(state[j]=='e')
-            {
-                putdown(j); 
+        }
+        
+        // part 4 (printing current status)
+        print_status();
+        for(int i=0;i<n;i++){
+            if(status[i]=='e'){
+                putdown(i);
             }
         }
-        printf("\nDo you want to continue?(y/n): "); 
-        sacnf("%c",&c);
-        if(c=='n'||c=='N')
-            break; 
-        else
-            round++;
+        printf("\nEnter 1 to continue for next round >> ");
+        scanf("%d",&c);
+        if(c!=1){
+            break;
+        }
+        round++;
     }
+    
+    return 0;
 }
-
-void pickup(int i)
-{
-    state[i]='h';
+void pickup(int i){
+    status[i]='h';
     test(i);
 }
-void print_status()
-{
-    int i; printf("\nPHILOSOPHER\tSTATE");
-    for(i=0;i<no_phil;i++)
-    {
-        printf("\n%s\t\t%c",pname[i],state[i]); 
+void putdown(int j){
+    status[j]='t';
+}
+void test(int i){
+    // i+(n-1)%n = if i=0,n=4,=> 0+(3)%4=3 =>left side
+    // (i+1)%n  = 0+1%4 = 1 => right side
+
+    if(status[(i+(n-1))%n]!='e' && status[(i+1)%n]!='e' && status[i]!='e'){
+        status[i]='e';
+    }
+    if(status[i]!='e')
+        printf("\n%s must wait since her neighbour is eating",p_name[i]);
+    else if(status[i]=='e')
+        printf("\nHungry philosopher %s is granted to eat",p_name[i]);
+    
+}
+
+
+
+void print_status(){
+    printf("\nCURRENT STATUS\nPHILNAME\tSTATUS");
+    for(int i=0;i<n;i++){
+        printf("\n%s\t\t\t%c",p_name[i],status[i]);
         
     }
-    
 }
 
-void test(int i) {
-    if((state[(i+(no_phil-1))%no_phil]!='e')&&(state[i]=='h')&&(state[(i+1)%no_phil]!='e'))
-    {
-        state[i]='e';
-    }
-if(state[i]!='e')
-    printf("\n%s must wait since her neighbour is eating",pname[i]);
-else if(state[i]=='e')
-    printf("\nHungry philosopher %s is granted to eat",pname[i]);
-} 
-
-void putdown(int i)
-{
-    state[i]='t'; 
-    
-}
