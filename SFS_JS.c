@@ -12,7 +12,7 @@ void swap(struct process *p1,struct process *p2){
     *p1=*p2;
     *p2=temp;
 }
-void main(){
+int main(){
     int n;
     int total =0;
     printf("\nEnter no of process >> ");
@@ -51,5 +51,5 @@ void main(){
     printf("\nAverage waiting time is %d ", total) ;   
     printf("\nAverage waiting time is %d ", total/n) ;  
     
-    
+    return 0;
 }
