@@ -37,10 +37,13 @@ void bankers(){
 
     int safe_seq[10];
     int flag,k=0;
+    //Initilally all the process are zero
     for(int i=0;i < np; i++)
-        finish[i]=0; //Initilally all the process are zero
+        finish[i]=0; 
 
-    for(int i=0;i<np;i++){
+    
+    for(int i=0;i<np;i++)
+    {
         flag=0;
 
         if(finish[i]==0){
@@ -87,13 +90,8 @@ void bankers(){
         for (int i = 0; i < np; i++)
         {
             printf("P%d ",safe_seq[i]);
-        }
-        
+        }    
     }
-
-    
-
-
 
 }
 
