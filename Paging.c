@@ -41,14 +41,15 @@ int main() {
     
     x=0;
     printf("PAGE CONTENT");
-    for(i=0;i<page_size;i++){
+    for(i=0;i<no_pages_log;i++){
         printf("\nPage %d : ",i);
-        for(j=0;j<no_pages_log;j++){
+        for(j=0;j<page_size;j++){
             printf("\n\tLogical address %d: %s",x,log_mem_content[x]);
             x++;
             
         }
     }
+
     // part 3
     for(i=0;i<no_frames_phy;i++){
         frame_alloc[i] =0;
